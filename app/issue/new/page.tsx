@@ -1,5 +1,5 @@
 "use client";
-import { Button, Callout, Text, TextArea, TextField } from "@radix-ui/themes";
+import { Button, Callout, TextArea, TextField } from "@radix-ui/themes";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
