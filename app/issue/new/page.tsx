@@ -23,6 +23,17 @@ const NewIssuePage = () => {
   });
   const [error, setError] = useState("");
   const [isSUbmiting, setIsSubmiting] = useState(false);
+
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      setIsSubmiting(true)
+      await axios.post("/api/issues", data);
+      route.push("/issue");
+    } catch (_error) {
+      setIsSubmiting(false)
+      setError("Unexpected error");
+    }
+  })
   return (
     <div className="max-w-xl">
       <div>
@@ -35,16 +46,7 @@ const NewIssuePage = () => {
         </div>
         <form
           className=" space-y-2"
-          onSubmit={handleSubmit(async (data) => {
-            try {
-              setIsSubmiting(true)
-              await axios.post("/api/issues", data);
-              route.push("/issue");
-            } catch (_error) {
-              setIsSubmiting(false)
-              setError("Unexpected error");
-            }
-          })}
+          onSubmit={onSubmit}
         >
           <ErrorMessage>{errors.title?.message}</ErrorMessage>
 
