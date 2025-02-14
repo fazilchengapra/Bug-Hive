@@ -26,14 +26,14 @@ const NewIssuePage = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      setIsSubmiting(true)
+      setIsSubmiting(true);
       await axios.post("/api/issues", data);
       route.push("/issue");
     } catch (_error) {
-      setIsSubmiting(false)
+      setIsSubmiting(false);
       setError("Unexpected error");
     }
-  })
+  });
   return (
     <div className="max-w-xl">
       <div>
@@ -44,10 +44,7 @@ const NewIssuePage = () => {
             </Callout.Root>
           )}
         </div>
-        <form
-          className=" space-y-2"
-          onSubmit={onSubmit}
-        >
+        <form className=" space-y-2" onSubmit={onSubmit}>
           <ErrorMessage>{errors.title?.message}</ErrorMessage>
 
           <TextField.Root
