@@ -29,9 +29,13 @@ const NewIssuePage = () => {
       setIsSubmiting(true);
       await axios.post("/api/issues", data);
       route.push("/issue");
-    } catch (_error) {
+    } catch (error) {
       setIsSubmiting(false);
-      setError("Unexpected error");
+      if (axios.isAxiosError(error)) {
+        setError(error.response?.data?.message || "An error occurred while submitting.");
+      } else {
+        setError("Unexpected error: " + (error as Error).message);
+      }
     }
   });
   return (
