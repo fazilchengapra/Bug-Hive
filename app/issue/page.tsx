@@ -4,7 +4,7 @@ import React from "react";
 import IssueStatusBadge from "../components/IssueStatusBadge";
 import delay from "delay";
 import ActionButton from "./ActionButton";
-import Link from "next/link";
+import Link from "../components/Link";
 
 const Issue = async () => {
   const issues = await prisma.issue.findMany();
