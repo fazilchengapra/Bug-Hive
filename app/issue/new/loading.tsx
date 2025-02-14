@@ -1,15 +1,16 @@
-import React from "react";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import { Skeleton } from "../../components";
+import { Box } from "@radix-ui/themes";
 
-const loading = () => {
+const NewIssueLoadingPage = () => {
   return (
-    <div className="max-w-lg">
-        <Skeleton className=""/>
-        <Skeleton className="mt-3" count={3}/>
-        <Skeleton className="w-12"/>
+    <div>
+      <Box className="max-w-lg">
+        <Skeleton />
+        <Skeleton className="mt-3 h-2rem" />
+        <Skeleton />
+      </Box>
     </div>
   );
 };
 
-export default loading;
+export default NewIssueLoadingPage;
