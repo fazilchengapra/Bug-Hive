@@ -10,14 +10,18 @@ const IssueDeleteButton = ({ issueId }: { issueId: number }) => {
       <AlertDialog.Content>
         <AlertDialog.Title>Are You Sure Want to Delete</AlertDialog.Title>
         <AlertDialog.Description>
-          Are You Sure This Action Cannot Provide Undo Action
+          This action cannot be undone. This will permanently delete the issue.
         </AlertDialog.Description>
-        <Flex  mt={'4'} gap={'5'} justify={'end'}>
+        <Flex mt={"4"} gap={"5"} justify={"end"}>
           <AlertDialog.Cancel>
-            <Button variant="soft" color="gray">Cancel</Button>
+            <Button variant="soft" color="gray">
+              Cancel
+            </Button>
           </AlertDialog.Cancel>
           <AlertDialog.Action>
-            <Button variant="solid" color="red">Delete</Button>
+            <Button variant="solid" color="red">
+              Delete
+            </Button>
           </AlertDialog.Action>
         </Flex>
       </AlertDialog.Content>
