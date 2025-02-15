@@ -9,7 +9,7 @@ const Navbar = () => {
     const pathName = usePathname()
     console.log(pathName)
   const link = [
-    { label: "Issue", href: "/issue" },
+    { label: "Issue", href: "/issue/list" },
     { label: "Dashboard", href: "/d" },
   ];
   return (
