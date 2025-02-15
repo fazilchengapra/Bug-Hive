@@ -6,12 +6,12 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { newIssueSchema } from "@/app/validationSchemas";
+import { issueValidationSchema } from "@/app/validationSchemas";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
 import { Issue } from "@prisma/client";
 
-type issueFormData = z.infer<typeof newIssueSchema>;
+type issueFormData = z.infer<typeof issueValidationSchema>;
 
 const IssueForm = ({ IssueDetails }: { IssueDetails?: Issue }) => {
   const route = useRouter();
@@ -20,7 +20,7 @@ const IssueForm = ({ IssueDetails }: { IssueDetails?: Issue }) => {
     handleSubmit,
     formState: { errors },
   } = useForm<issueFormData>({
-    resolver: zodResolver(newIssueSchema),
+    resolver: zodResolver(issueValidationSchema),
   });
   const [error, setError] = useState("");
   const [isSUbmiting, setIsSubmiting] = useState(false);
