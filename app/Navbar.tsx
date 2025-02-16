@@ -13,6 +13,7 @@ import {
   Flex,
   Text,
 } from "@radix-ui/themes";
+import { Skeleton } from "@/app/components";
 
 const Navbar = () => {
   return (
@@ -21,7 +22,9 @@ const Navbar = () => {
         <Container>
           <Flex className="h-16" justify={"between"}>
             <NavLinks />
-            <UserAction />
+            <div className="flex items-center">
+              <UserAction />
+            </div>
           </Flex>
         </Container>
       </nav>
@@ -32,33 +35,35 @@ const Navbar = () => {
 const UserAction = () => {
   const { data: session, status } = useSession();
 
-  if (status === "loading") return null;
+  if (status === "loading") return <Skeleton width={"3rem"} />;
   if (status === "unauthenticated")
-    return <Link className="flex items-center nav-link" href={"/api/auth/signin"}>Login</Link>;
+    return (
+      <Link className=" nav-link" href={"/api/auth/signin"}>
+        Login
+      </Link>
+    );
 
   return (
-    <Box className="flex items-center">
-      <DropdownMenu.Root>
-        <DropdownMenu.Trigger>
-          <Avatar
-            referrerPolicy="no-referrer"
-            className="cursor-pointer"
-            src={session!.user!.image!}
-            fallback="?"
-            size="2"
-            radius="full"
-          />
-        </DropdownMenu.Trigger>
-        <DropdownMenu.Content>
-          <Text>
-            <DropdownMenu.Label>{session!.user?.email}</DropdownMenu.Label>
-          </Text>
-          <Link href={"/api/auth/signout"}>
-            <DropdownMenu.Item color="red">Log out </DropdownMenu.Item>
-          </Link>
-        </DropdownMenu.Content>
-      </DropdownMenu.Root>
-    </Box>
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger>
+        <Avatar
+          referrerPolicy="no-referrer"
+          className="cursor-pointer"
+          src={session!.user!.image!}
+          fallback="?"
+          size="2"
+          radius="full"
+        />
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Content>
+        <Text>
+          <DropdownMenu.Label>{session!.user?.email}</DropdownMenu.Label>
+        </Text>
+        <Link href={"/api/auth/signout"}>
+          <DropdownMenu.Item color="red">Log out </DropdownMenu.Item>
+        </Link>
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
   );
 };
 
