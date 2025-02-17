@@ -13,10 +13,10 @@ interface Props {
 }
 
 const Issue = async ({ searchParams }: Props) => {
-  const columns: { label: string; value: keyof Issue }[] = [
+  const columns: { label: string; value: keyof Issue; className?: string }[] = [
     { label: "Title", value: "title" },
-    { label: "Status", value: "status" },
-    { label: "Date", value: "createdAt" },
+    { label: "Status", value: "status", className: 'hidden md:table-cell' },
+    { label: "Date", value: "createdAt" , className: 'hidden md:table-cell'},
   ];
 
   const { status, order } = await searchParams;
@@ -46,7 +46,7 @@ const Issue = async ({ searchParams }: Props) => {
         <Table.Header>
           <Table.Row>
             {columns.map((column) => (
-              <Table.RowHeaderCell key={column.value}>
+              <Table.RowHeaderCell key={column.value} className={column.className}>
                 <NextLnk href={{ query: { status, order: column.value } }}>
                   {column.label}
                 </NextLnk>
