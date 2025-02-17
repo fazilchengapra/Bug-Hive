@@ -3,13 +3,28 @@ import { Flex, Table } from "@radix-ui/themes";
 import ActionButton from "./ActionButton";
 import { Link, IssueStatusBadge } from "@/app/components";
 import FilterByStatus from "./FilterByStatus";
+import { Status } from "@prisma/client";
 
-const Issue = async () => {
-  const issues = await prisma.issue.findMany();
+const Issue = async ({
+  searchParams,
+}: {
+  searchParams: { status: Status };
+}) => {
+  const { status } = await searchParams;
+
+  const statuses = Object.values(Status);
+
+  const isStatus = statuses.includes(status) ? status : undefined;
+
+  const issues = await prisma.issue.findMany({
+    where: {
+      status: isStatus,
+    },
+  });
   return (
     <div className="">
-      <Flex justify={'between'}>
-        <FilterByStatus/>
+      <Flex justify={"between"}>
+        <FilterByStatus />
         <ActionButton />
       </Flex>
       <Table.Root variant="surface">
