@@ -13,12 +13,7 @@ const AssignSelect = ({ issue }: { issue: Issue }) => {
     data: users,
     error,
     isLoading,
-  } = useQuery<User[]>({
-    queryKey: ["users"],
-    queryFn: () => axios.get("/api/users").then((res) => res.data),
-    staleTime: 60 * 1000,
-    retry: 3,
-  });
+  } = useUsers()
   if (isLoading) return <Skeleton />;
   if (error) return null;
 
@@ -51,6 +46,14 @@ const AssignSelect = ({ issue }: { issue: Issue }) => {
       <Toaster />
     </>
   );
+
 };
+
+const useUsers = () => useQuery<User[]>({
+  queryKey: ["users"],
+  queryFn: () => axios.get("/api/users").then((res) => res.data),
+  staleTime: 60 * 1000,
+  retry: 3,
+});
 
 export default AssignSelect;
