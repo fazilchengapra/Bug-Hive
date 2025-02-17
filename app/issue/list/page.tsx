@@ -3,18 +3,31 @@ import { Flex, Table } from "@radix-ui/themes";
 import ActionButton from "./ActionButton";
 import { Link, IssueStatusBadge } from "@/app/components";
 import FilterByStatus from "./FilterByStatus";
+import type { Issue } from "@prisma/client";
 import { Status } from "@prisma/client";
+import NextLnk from 'next/link'
+import { ArrowUpIcon } from "@radix-ui/react-icons";
 
-const Issue = async ({
-  searchParams,
-}: {
-  searchParams: { status: Status };
-}) => {
-  const { status } = await searchParams;
+interface Props {
+  searchParams: {status: Status, orderBy: keyof Issue}
+}
+
+const Issue = async ({searchParams}:Props) => {
+  const columns: { label: string; value: keyof Issue }[] = [
+    { label: "Title", value: "title" },
+    { label: "Status", value: "status" },
+    { label: "Date", value: "createdAt" },
+  ];
+
+  const {status, orderBy} = await searchParams
 
   const statuses = Object.values(Status);
 
   const isStatus = statuses.includes(status) ? status : undefined;
+
+
+
+  console.log(isStatus)
 
   const issues = await prisma.issue.findMany({
     where: {
@@ -30,13 +43,12 @@ const Issue = async ({
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
-            <Table.RowHeaderCell>Title</Table.RowHeaderCell>
-            <Table.RowHeaderCell className="hidden md:table-cell">
-              Status
-            </Table.RowHeaderCell>
-            <Table.RowHeaderCell className="hidden md:table-cell">
-              Date
-            </Table.RowHeaderCell>
+            {columns.map((column) => (
+              <Table.RowHeaderCell key={column.value}>
+                <NextLnk href={{query: {status, orderBy: column.value}}}>{column.label}</NextLnk>
+                {column.value === orderBy && <ArrowUpIcon className="inline"/>}
+              </Table.RowHeaderCell>
+            ))}
           </Table.Row>
         </Table.Header>
         <Table.Body>

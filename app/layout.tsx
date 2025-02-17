@@ -8,6 +8,7 @@ import { Container, Theme } from "@radix-ui/themes";
 import Provider from "./auth/Provider";
 import QueryClientProvider from "./QueryClientProvider";
 
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
