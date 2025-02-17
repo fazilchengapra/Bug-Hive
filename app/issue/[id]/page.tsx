@@ -31,7 +31,7 @@ const ViewIssue = async ({ params }: Props) => {
       </Box>
       <Box>
         {session && <Flex className="flex-col gap-y-2">
-          <AssignSelect/>
+          <AssignSelect issue={details}/>
           <IssueEditButton issueId={details.id} />
           <IssueDeleteButton issueId={details.id} />
         </Flex>}
