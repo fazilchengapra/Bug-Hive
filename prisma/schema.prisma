@@ -74,6 +74,7 @@ model User {
 }
 
 model VerificationToken {
+  id         String   @id @default(cuid())  // Add this line to define a primary key
   identifier String
   token      String
   expires    DateTime
@@ -81,3 +82,5 @@ model VerificationToken {
   @@unique([identifier, token])
   @@map("verification_tokens")
 }
+
+
