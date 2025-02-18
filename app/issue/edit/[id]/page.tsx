@@ -3,10 +3,11 @@ import { prisma } from "@/prisma/client";
 import { notFound } from "next/navigation";
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
-const IssueEditPage = async ({ params: { id } }: Props) => {
+const IssueEditPage = async ({ params }: Props) => {
+  const {id}= await params
   const statusId = parseInt(id);
   if (!statusId) notFound();
   const details = await prisma.issue.findUnique({
@@ -28,7 +29,7 @@ export default IssueEditPage;
 export async function generateMetadata({ params }: Props) {
   const issue = await prisma.issue.findUnique({
     where: {
-      id: parseInt(params.id),
+      id: parseInt((await params).id),
     },
   });
 

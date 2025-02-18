@@ -9,17 +9,19 @@ import AssignSelect from "./AssignSelect";
 import { cache } from "react";
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
-const fetchIssue = cache((issueId: number) => prisma.issue.findUnique({where:{id:issueId}}))
+const fetchIssue = cache((issueId: number) =>
+  prisma.issue.findUnique({ where: { id: issueId } })
+);
 
 const ViewIssue = async ({ params }: Props) => {
-  const session =await getServerSession()
-  
+  const session = await getServerSession();
+
   const { id } = await params;
 
-  const details = await fetchIssue(parseInt(id))
+  const details = await fetchIssue(parseInt(id));
 
   if (!details) notFound();
 
@@ -29,11 +31,13 @@ const ViewIssue = async ({ params }: Props) => {
         <IssueDetailsPage issueDetails={details} />
       </Box>
       <Box>
-        {session && <Flex className="flex-col gap-y-2">
-          <AssignSelect issue={details}/>
-          <IssueEditButton issueId={details.id} />
-          <IssueDeleteButton issueId={details.id} />
-        </Flex>}
+        {session && (
+          <Flex className="flex-col gap-y-2">
+            <AssignSelect issue={details} />
+            <IssueEditButton issueId={details.id} />
+            <IssueDeleteButton issueId={details.id} />
+          </Flex>
+        )}
       </Box>
     </Grid>
   );
@@ -42,7 +46,7 @@ const ViewIssue = async ({ params }: Props) => {
 export default ViewIssue;
 
 export async function generateMetadata({ params }: Props) {
-  const issue = await fetchIssue(parseInt(params.id))
+  const issue = await fetchIssue(parseInt((await params).id));
 
   return {
     title: "view " + issue?.title,

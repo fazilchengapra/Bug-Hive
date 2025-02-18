@@ -5,8 +5,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const {id} = await params
   // const session =await getServerSession()
   // if(!session) return NextResponse.json({error: "Unauthorized request"}, {status:401})
   const body = await request.json();
@@ -27,7 +28,7 @@ export async function PATCH(
 
   const issueData = await prisma.issue.findUnique({
     where: {
-      id: parseInt(params.id),
+      id: parseInt(id),
     },
   });
   if (!issueData)
@@ -35,7 +36,7 @@ export async function PATCH(
 
   const result = await prisma.issue.update({
     where: {
-      id: parseInt(params.id),
+      id: parseInt(id),
     },
     data: {
       title,
@@ -49,11 +50,11 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string } >}
 ) {
   const session =await getServerSession()
   if(!session) return NextResponse.json({error: "Unauthorized request"}, {status:401})
-  const { id } = params;
+  const { id } =await params;
   const issue = await prisma.issue.findUnique({
     where: {
       id: parseInt(id),

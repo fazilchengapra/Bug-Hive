@@ -9,7 +9,7 @@ import IssueTable, { columnNames, IssueQuery } from "./IssueTable";
 import { Metadata } from "next";
 
 interface Props {
-  searchParams: IssueQuery;
+  searchParams: Promise<IssueQuery>;
 }
 
 const Issue = async ({ searchParams }: Props) => {
@@ -42,7 +42,7 @@ const Issue = async ({ searchParams }: Props) => {
         <FilterByStatus />
         <ActionButton />
       </Flex>
-      <IssueTable searchParams={searchParams} issues={issues} />
+      <IssueTable searchParams={await searchParams} issues={issues} />
       <Pagination
         currentPage={currentPage}
         itemCount={issueCount}
