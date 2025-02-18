@@ -4,7 +4,7 @@ import React from "react";
 
 const ActionButton = () => {
   return (
-    <div className="mb-5">
+    <div>
       <Button >
         <Link href={"/issue/new"}>New issue</Link>
       </Button>
