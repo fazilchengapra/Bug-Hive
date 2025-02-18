@@ -41,3 +41,16 @@ const ViewIssue = async ({ params }: Props) => {
 };
 
 export default ViewIssue;
+
+export async function generateMetadata({ params }: Props) {
+  const issue = await prisma.issue.findUnique({
+    where: {
+      id: parseInt(params.id),
+    },
+  });
+
+  return {
+    title: "view " + issue?.title,
+    description: "Viewing a issue",
+  };
+}

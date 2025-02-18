@@ -6,6 +6,7 @@ import ActionButton from "./ActionButton";
 import FilterByStatus from "./FilterByStatus";
 import Pagination from "@/app/components/Pagination";
 import IssueTable, { columnNames, IssueQuery } from "./IssueTable";
+import { Metadata } from "next";
 
 interface Props {
   searchParams: IssueQuery;
@@ -52,3 +53,8 @@ const Issue = async ({ searchParams }: Props) => {
 };
 
 export default Issue;
+
+export const metadata:Metadata={
+  title: 'View all issues',
+  description: "View all project issues"
+}

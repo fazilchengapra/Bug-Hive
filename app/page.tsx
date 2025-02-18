@@ -3,6 +3,7 @@ import IssueChart from "./IssueChart";
 import { Flex, Grid } from "@radix-ui/themes";
 import IssueSummary from "./IssueSummary";
 import LatestIssue from "./LatestIssue";
+import { Metadata } from "next";
 
 export default async function Home() {
   const open = await prisma.issue.count({
@@ -33,4 +34,9 @@ export default async function Home() {
       </Grid>
     </>
   );
+}
+
+export const metadata: Metadata ={
+  title: "Bug-Hive - Dashboard",
+  description: "View latest issue and analyze chart"
 }
