@@ -7,7 +7,6 @@ import classNames from "classnames";
 import { useSession } from "next-auth/react";
 import {
   Avatar,
-  Box,
   Container,
   DropdownMenu,
   Flex,
@@ -18,13 +17,11 @@ import { Skeleton } from "@/app/components";
 const Navbar = () => {
   return (
     <div>
-      <nav className="border  text-lg">
+      <nav className="border text-lg">
         <Container>
-          <Flex className="h-16" justify={"between"}>
+          <Flex className="h-16 items-center" justify={"between"}>
             <NavLinks />
-            <div className="flex items-center">
-              <UserAction />
-            </div>
+            <UserAction />
           </Flex>
         </Container>
       </nav>
@@ -75,10 +72,11 @@ const NavLinks = () => {
   ];
 
   return (
-    <Box className="flex items-center space-x-5">
-      <Link href={"/"}>
+    <Flex className="!items-center" gap={"5"}>
+      <Link  href={"/"}>
         <AiFillBug />
       </Link>
+
       {link.map((link) => (
         <Link
           key={link.href}
@@ -91,7 +89,7 @@ const NavLinks = () => {
           {link.label}
         </Link>
       ))}
-    </Box>
+    </Flex>
   );
 };
 
