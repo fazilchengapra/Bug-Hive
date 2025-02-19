@@ -1,4 +1,3 @@
-import { prisma } from "@/prisma/client";
 import IssueChart from "./IssueChart";
 import { Flex, Grid } from "@radix-ui/themes";
 import IssueSummary from "./IssueSummary";
@@ -6,29 +5,24 @@ import LatestIssue from "./LatestIssue";
 import { Metadata } from "next";
 
 export default async function Home() {
-  const open = await prisma.issue.count({
-    where: {
-      status: "OPEN",
-    },
+  const response = await fetch(`${process.env.NEXTAUTH_URL}/api/root`, {
+    cache: "no-store",
   });
-
-  const closed = await prisma.issue.count({
-    where: {
-      status: "CLOSED",
-    },
-  });
-
-  const in_progress = await prisma.issue.count({
-    where: {
-      status: "IN_PROGRESS",
-    },
-  });
+  const data = await response.json();
   return (
     <>
-      <Grid columns={{ initial: "1", md: "2" }} gap={'5'}>
-        <Flex direction={"column"} gap={'5'}>
-          <IssueSummary open={open} in_progress={in_progress} closed={closed} />
-          <IssueChart open={open} in_progress={in_progress} closed={closed} />
+      <Grid columns={{ initial: "1", md: "2" }} gap={"5"}>
+        <Flex direction={"column"} gap={"5"}>
+          <IssueSummary
+            open={data.open}
+            in_progress={data.in_progress}
+            closed={data.closed}
+          />
+          <IssueChart
+            open={data.open}
+            in_progress={data.in_progress}
+            closed={data.closed}
+          />
         </Flex>
         <LatestIssue />
       </Grid>
@@ -36,7 +30,6 @@ export default async function Home() {
   );
 }
 
-export const metadata: Metadata ={
-  title: "Bug-Hive - Dashboard",
-  description: "View latest issue and analyze chart"
-}
+export const metadata: Metadata = {
+  title: "Bug-Hive Dashboard",
+};

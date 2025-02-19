@@ -15,6 +15,7 @@ const IssueSummary = ({ open, closed, in_progress }: Props) => {
     { label: "Closed", value: closed, status: "CLOSED" },
     { label: "In Progress", value: in_progress, status: "IN_PROGRESS" },
   ];
+
   return (
     <Flex gap={"3"}>
       {containers.map((container) => (
